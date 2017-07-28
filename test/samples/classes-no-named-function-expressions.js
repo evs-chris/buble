@@ -128,10 +128,10 @@ module.exports = [
 				}
 
 				if ( Bar ) Foo.__proto__ = Bar;
-				Foo.prototype = Object.create( Bar && Bar.prototype );
-				Foo.prototype.constructor = Foo;
+				var Foo__proto__ = Foo.prototype = Object.create( Bar && Bar.prototype );
+				Foo__proto__.constructor = Foo;
 
-				Foo.prototype.baz = function ( str ) {
+				Foo__proto__.baz = function ( str ) {
 					return str + 'baz';
 				};
 
@@ -163,10 +163,10 @@ module.exports = [
 				}
 
 				if ( Bar ) Foo.__proto__ = Bar;
-				Foo.prototype = Object.create( Bar && Bar.prototype );
-				Foo.prototype.constructor = Foo;
+				var Foo__proto__ = Foo.prototype = Object.create( Bar && Bar.prototype );
+				Foo__proto__.constructor = Foo;
 
-				Foo.prototype.baz = function ( a, b, c ) {
+				Foo__proto__.baz = function ( a, b, c ) {
 					Bar.prototype.baz.call( this, a, b, c );
 				};
 
@@ -201,28 +201,28 @@ module.exports = [
 				}
 
 				if ( Bar ) Foo.__proto__ = Bar;
-				Foo.prototype = Object.create( Bar && Bar.prototype );
-				Foo.prototype.constructor = Foo;
+				var Foo__proto__ = Foo.prototype = Object.create( Bar && Bar.prototype );
+				Foo__proto__.constructor = Foo;
 
-				Foo.prototype.baz = function () {
+				Foo__proto__.baz = function () {
 					var args = [], len = arguments.length;
 					while ( len-- ) args[ len ] = arguments[ len ];
 
 					Bar.prototype.baz.apply(this, args);
 				};
-				Foo.prototype.boz = function ( x, y ) {
+				Foo__proto__.boz = function ( x, y ) {
 					var z = [], len = arguments.length - 2;
 					while ( len-- > 0 ) z[ len ] = arguments[ len + 2 ];
 
 					Bar.prototype.boz.apply(this, [ x, y ].concat( z ));
 				};
-				Foo.prototype.fab = function ( x ) {
+				Foo__proto__.fab = function ( x ) {
 					var y = [], len = arguments.length - 1;
 					while ( len-- > 0 ) y[ len ] = arguments[ len + 1 ];
 
 					Bar.prototype.qux.apply(this, x.concat( y ));
 				};
-				Foo.prototype.fob = function ( x, y ) {
+				Foo__proto__.fob = function ( x, y ) {
 					var this$1 = this;
 					var z = [], len = arguments.length - 2;
 					while ( len-- > 0 ) z[ len ] = arguments[ len + 2 ];
@@ -267,10 +267,10 @@ module.exports = [
 				}
 
 				if ( Bar ) Foo.__proto__ = Bar;
-				Foo.prototype = Object.create( Bar && Bar.prototype );
-				Foo.prototype.constructor = Foo;
+				var Foo__proto__ = Foo.prototype = Object.create( Bar && Bar.prototype );
+				Foo__proto__.constructor = Foo;
 
-				Foo.prototype.bar = function () {};
+				Foo__proto__.bar = function () {};
 
 				return Foo;
 			}(Bar));
@@ -296,10 +296,10 @@ module.exports = [
 				}
 
 				if ( Bar ) Foo.__proto__ = Bar;
-				Foo.prototype = Object.create( Bar && Bar.prototype );
-				Foo.prototype.constructor = Foo;
+				var Foo__proto__ = Foo.prototype = Object.create( Bar && Bar.prototype );
+				Foo__proto__.constructor = Foo;
 
-				Foo.prototype.bar = function () {};
+				Foo__proto__.bar = function () {};
 
 				return Foo;
 			}(Bar));
@@ -399,12 +399,13 @@ module.exports = [
 			var Foo = function () {
 				// constructor goes here
 			};
+			var Foo__proto__ = Foo.prototype;
 
-			Foo.prototype.before = function () {
+			Foo__proto__.before = function () {
 				// code goes here
 			};
 
-			Foo.prototype.after = function () {
+			Foo__proto__.after = function () {
 				// code goes here
 			};`
 	},
@@ -513,8 +514,8 @@ module.exports = [
 				}
 
 				if ( Shape ) Circle.__proto__ = Shape;
-				Circle.prototype = Object.create( Shape && Shape.prototype );
-				Circle.prototype.constructor = Circle;
+				var Circle__proto__ = Circle.prototype = Object.create( Shape && Shape.prototype );
+				Circle__proto__.constructor = Circle;
 
 				var prototypeAccessors = { area: {} };
 				var staticAccessors = { description: {} };
@@ -531,7 +532,7 @@ module.exports = [
 					return 'round';
 				};
 
-				Object.defineProperties( Circle.prototype, prototypeAccessors );
+				Object.defineProperties( Circle__proto__, prototypeAccessors );
 				Object.defineProperties( Circle, staticAccessors );
 
 				return Circle;
@@ -583,10 +584,10 @@ module.exports = [
 				}
 
 				if ( superclass ) b.__proto__ = superclass;
-				b.prototype = Object.create( superclass && superclass.prototype );
-				b.prototype.constructor = b;
+				var b__proto__ = b.prototype = Object.create( superclass && superclass.prototype );
+				b__proto__.constructor = b;
 
-				b.prototype.c = function () {};
+				b__proto__.c = function () {};
 
 				return b;
 			}(q.a));`
@@ -616,10 +617,10 @@ module.exports = [
 				}
 
 				if ( superclass ) b.__proto__ = superclass;
-				b.prototype = Object.create( superclass && superclass.prototype );
-				b.prototype.constructor = b;
+				var b__proto__ = b.prototype = Object.create( superclass && superclass.prototype );
+				b__proto__.constructor = b;
 
-				b.prototype.c = function () {};
+				b__proto__.c = function () {};
 
 				return b;
 			}(q.a));`
@@ -643,8 +644,8 @@ module.exports = [
 				}
 
 				if ( superclass ) b.__proto__ = superclass;
-				b.prototype = Object.create( superclass && superclass.prototype );
-				b.prototype.constructor = b;
+				var b__proto__ = b.prototype = Object.create( superclass && superclass.prototype );
+				b__proto__.constructor = b;
 
 				return b;
 			}(x.y.z));`
@@ -668,8 +669,8 @@ module.exports = [
 				}
 
 				if ( SuperClass ) SubClass.__proto__ = SuperClass;
-				SubClass.prototype = Object.create( SuperClass && SuperClass.prototype );
-				SubClass.prototype.constructor = SubClass;
+				var SubClass__proto__ = SubClass.prototype = Object.create( SuperClass && SuperClass.prototype );
+				SubClass__proto__.constructor = SubClass;
 
 				return SubClass;
 			}(SuperClass));`
@@ -692,12 +693,13 @@ module.exports = [
 		`,
 		output: `
 			var Foo = function () {};
+			var Foo__proto__ = Foo.prototype;
 
-			Foo.prototype.bar = function () {
+			Foo__proto__.bar = function () {
 				var s = "0\t1\t\t2\t\t\t3\t\t\t\t4\t\t\t\t\t5";
 				return s + '\t';
 			};
-			Foo.prototype.baz = function () {
+			Foo__proto__.baz = function () {
 				return "\\t";
 			};
 		`
@@ -742,8 +744,8 @@ module.exports = [
 				}
 
 				if ( Bar ) Foo.__proto__ = Bar;
-				Foo.prototype = Object.create( Bar && Bar.prototype );
-				Foo.prototype.constructor = Foo;
+				var Foo__proto__ = Foo.prototype = Object.create( Bar && Bar.prototype );
+				Foo__proto__.constructor = Foo;
 
 				Foo.baz = function () {
 					Bar.baz.call(this);
@@ -793,10 +795,10 @@ module.exports = [
 				}
 
 				if ( D ) C.__proto__ = D;
-				C.prototype = Object.create( D && D.prototype );
-				C.prototype.constructor = C;
+				var C__proto__ = C.prototype = Object.create( D && D.prototype );
+				C__proto__.constructor = C;
 
-				C.prototype.x = function (){};
+				C__proto__.x = function (){};
 
 				return C;
 			}(D));
@@ -807,10 +809,10 @@ module.exports = [
 				}
 
 				if ( F ) E.__proto__ = F;
-				E.prototype = Object.create( F && F.prototype );
-				E.prototype.constructor = E;
+				var E__proto__ = E.prototype = Object.create( F && F.prototype );
+				E__proto__.constructor = E;
 
-				E.prototype.x = function (){};
+				E__proto__.x = function (){};
 
 				return E;
 			}(F))`
@@ -924,10 +926,10 @@ module.exports = [
 				}
 
 				if ( Bar ) Foo.__proto__ = Bar;
-				Foo.prototype = Object.create( Bar && Bar.prototype );
-				Foo.prototype.constructor = Foo;
+				var Foo__proto__ = Foo.prototype = Object.create( Bar && Bar.prototype );
+				Foo__proto__.constructor = Foo;
 
-				Foo.prototype.render = function () {
+				Foo__proto__.render = function () {
 					// code goes here...
 				};
 
@@ -956,8 +958,8 @@ module.exports = [
 				}
 
 				if ( SuperClass ) SubClass.__proto__ = SuperClass;
-				SubClass.prototype = Object.create( SuperClass && SuperClass.prototype );
-				SubClass.prototype.constructor = SubClass;
+				var SubClass__proto__ = SubClass.prototype = Object.create( SuperClass && SuperClass.prototype );
+				SubClass__proto__.constructor = SubClass;
 
 				return SubClass;
 			}(SuperClass));`
@@ -984,8 +986,8 @@ module.exports = [
 				}
 
 				if ( SuperClass ) SubClass.__proto__ = SuperClass;
-				SubClass.prototype = Object.create( SuperClass && SuperClass.prototype );
-				SubClass.prototype.constructor = SubClass;
+				var SubClass__proto__ = SubClass.prototype = Object.create( SuperClass && SuperClass.prototype );
+				SubClass__proto__.constructor = SubClass;
 
 				return SubClass;
 			}(SuperClass));`
@@ -1119,8 +1121,8 @@ module.exports = [
 				}
 
 				if ( B ) A.__proto__ = B;
-				A.prototype = Object.create( B && B.prototype );
-				A.prototype.constructor = A;
+				var A__proto__ = A.prototype = Object.create( B && B.prototype );
+				A__proto__.constructor = A;
 
 				return A;
 			}(B));`
@@ -1140,11 +1142,12 @@ module.exports = [
 		`,
 		output: `
 			var A = function () {};
+			var A__proto__ = A.prototype;
 
-			A.prototype[x] = function (){};
-			A.prototype[0] = function (){};
-			A.prototype[1 + 2] = function (){};
-			A.prototype[normal + " Method"] = function (){};
+			A__proto__[x] = function (){};
+			A__proto__[0] = function (){};
+			A__proto__[1 + 2] = function (){};
+			A__proto__[normal + " Method"] = function (){};
 		`
 	},
 
@@ -1188,15 +1191,16 @@ module.exports = [
 		`,
 		output: `
 			var C = function () {};
+			var C__proto__ = C.prototype;
 
-			C.prototype[0] = function (){};
-			C.prototype[5] = function (){};
-			C.prototype[80] = function (){};
-			C.prototype[.12e3] = function (){};
-			C.prototype[491] = function (){};
-			C.prototype[12e34] = function (){};
-			C.prototype[0xFFFF] = function (){};
-			C.prototype["var"] = function (){};
+			C__proto__[0] = function (){};
+			C__proto__[5] = function (){};
+			C__proto__[80] = function (){};
+			C__proto__[.12e3] = function (){};
+			C__proto__[491] = function (){};
+			C__proto__[12e34] = function (){};
+			C__proto__[0xFFFF] = function (){};
+			C__proto__["var"] = function (){};
 		`
 	},
 

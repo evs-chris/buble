@@ -7,6 +7,8 @@ export default class ClassBody extends Node {
 	transpile ( code, transforms, inFunctionExpression, superName ) {
 		if ( transforms.classes ) {
 			const name = this.parent.name;
+			const methodCount = this.body.filter( member => member.kind === 'method' && member.name !== 'constructor' && !member.static ).length + ( this.parent.superClass ? 2 : 0 );
+			const protoName = methodCount > 1 ? `${name}__proto__` : `${name}.prototype`;
 
 			const indentStr = code.getIndentString();
 			const i0 = this.getIndentation() + ( inFunctionExpression ? indentStr : '' );
@@ -38,12 +40,14 @@ export default class ClassBody extends Node {
 				}
 
 				if ( !inFunctionExpression ) code.insertLeft( constructor.end, ';' );
+
+				if ( !this.parent.superClass && methodCount > 1 ) code.insertLeft( constructor.end, `\n${i0}var ${protoName} = ${name}.prototype;` );
 			}
 
 			let namedFunctions = this.program.options.namedFunctionExpressions !== false;
 			let namedConstructor = namedFunctions || this.parent.superClass || this.parent.type !== 'ClassDeclaration';
 			if ( this.parent.superClass ) {
-				let inheritanceBlock = `if ( ${superName} ) ${name}.__proto__ = ${superName};\n${i0}${name}.prototype = Object.create( ${superName} && ${superName}.prototype );\n${i0}${name}.prototype.constructor = ${name};`;
+				let inheritanceBlock = `if ( ${superName} ) ${name}.__proto__ = ${superName};\n${i0}var ${protoName} = ${name}.prototype = Object.create( ${superName} && ${superName}.prototype );\n${i0}${protoName}.constructor = ${name};`;
 
 				if ( constructor ) {
 					introBlock += `\n\n${i0}` + inheritanceBlock;
@@ -58,7 +62,10 @@ export default class ClassBody extends Node {
 			} else if ( !constructor ) {
 				let fn = 'function ' + (namedConstructor ? name + ' ' : '') + '() {}';
 				if ( this.parent.type === 'ClassDeclaration' ) fn += ';';
-				if ( this.body.length ) fn += `\n\n${i0}`;
+				if ( this.body.length ) {
+					if ( methodCount > 1 ) fn += `\n${i0}var ${protoName} = ${name}.prototype;\n\n${i0}`;
+					else fn += `\n\n${i0}`;
+				}
 
 				introBlock += fn;
 			}
@@ -119,7 +126,7 @@ export default class ClassBody extends Node {
 				} else {
 					lhs = method.static ?
 						`${name}` :
-						`${name}.prototype`;
+						`${protoName}`;
 				}
 
 				if ( !method.computed ) lhs += '.';
@@ -157,7 +164,7 @@ export default class ClassBody extends Node {
 
 				if ( prototypeGettersAndSetters.length ) {
 					intro.push( `var ${prototypeAccessors} = { ${prototypeGettersAndSetters.map( name => `${name}: {}` ).join( ',' )} };` );
-					outro.push( `Object.defineProperties( ${name}.prototype, ${prototypeAccessors} );` );
+					outro.push( `Object.defineProperties( ${protoName}, ${prototypeAccessors} );` );
 				}
 
 				if ( staticGettersAndSetters.length ) {
