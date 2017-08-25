@@ -1,5 +1,5 @@
 {
-  "name": "buble",
+  "name": "@evs-chris/buble",
   "version": "0.15.2",
   "description": "The blazing fast, batteries-included ES2015 compiler",
   "main": "dist/buble.umd.js",
