@@ -1,13 +1,15 @@
 import * as acorn from 'acorn';
 import acornJsx from 'acorn-jsx/inject';
 import acornObjectSpread from 'acorn-object-spread/inject';
+import acornDynamicImport from 'acorn-dynamic-import/lib/inject';
 import Program from './program/Program.js';
 import { features, matrix } from './support.js';
 import getSnippet from './utils/getSnippet.js';
 
 const { parse } = [
 	acornObjectSpread,
-	acornJsx
+	acornJsx,
+	acornDynamicImport,
 ].reduce( ( final, plugin ) => plugin( final ), acorn );
 
 const dangerousTransforms = [
@@ -61,7 +63,8 @@ export function transform ( source, options = {} ) {
 			},
 			plugins: {
 				jsx: true,
-				objectSpread: true
+				objectSpread: true,
+				dynamicImport: true
 			}
 		});
 		options.jsx = jsx || options.jsx;
