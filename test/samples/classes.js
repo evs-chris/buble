@@ -448,8 +448,8 @@ module.exports = [
 				this.radius = radius;
 			};
 
-			var prototypeAccessors = { area: {} };
-			var staticAccessors = { description: {} };
+			var prototypeAccessors = { area: { configurable: true } };
+			var staticAccessors = { description: { configurable: true } };
 
 			prototypeAccessors.area.get = function () {
 				return Math.PI * Math.pow( this.radius, 2 );
@@ -501,8 +501,8 @@ module.exports = [
 				var Circle__proto__ = Circle.prototype = Object.create( Shape && Shape.prototype );
 				Circle__proto__.constructor = Circle;
 
-				var prototypeAccessors = { area: {} };
-				var staticAccessors = { description: {} };
+				var prototypeAccessors = { area: { configurable: true } };
+				var staticAccessors = { description: { configurable: true } };
 
 				prototypeAccessors.area.get = function () {
 					return Math.PI * Math.pow( this.radius, 2 );
@@ -805,7 +805,7 @@ module.exports = [
 		output: `
 			var Foo = function Foo () {};
 
-			var staticAccessors = { bar: {} };
+			var staticAccessors = { bar: { configurable: true } };
 
 			staticAccessors.bar.get = function () { return 'baz' };
 
